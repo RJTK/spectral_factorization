@@ -23,3 +23,5 @@ Numerical Linear Algebra with Applications, vol. 8, no. 6-7, pp. 467–496,
 2001. [Online]. Available: http://dx.doi.org/10.1002/nla.250
 
 The test.py file provides some tests and examples.
+
+Some other nice references here: http://stanford.edu/~boyd/papers/magdes.html
