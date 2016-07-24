@@ -32,7 +32,8 @@ def spectral_factorization(P, extra_zeros = 300):
     however there are numerical conditioning issues as it increases.  In
     order to be safe, this method is called recursively with decreasing
     extra_zeros if the factorization fails.  This is slow, and there are
-    certainly better methods, but this works.
+    certainly better methods, but this works to some extent.  If we fail
+    to find a valid factorization we raise FactorizationError.
 
     See the paper below for references.
 
@@ -41,13 +42,15 @@ def spectral_factorization(P, extra_zeros = 300):
     no. 6-7, pp. 467-496, 2001.  [Online]. Available:
     http://dx.doi.org/10.1002/nla.250
     '''
-    #This recursion ensures we will get a valid Q(z)
+    #This recursion tries to ensures we get a valid Q(z)
     #As extra_zeros increases, T may not be positive definite,
     #and even if it is, sometimes the roots of Q will still be
-    #outside the unit circle.  This is a total hack to ensure
-    #that the function always returns something valid.  But
-    #also note that it usually succeeds and these problems are
-    #rare.
+    #outside the unit circle.  This is a total hack to try to get
+    #the function to always return something valid.  Sometimes
+    #however it still fails, and we raise "FactorizationError".
+    #But also note that it usually succeeds and these problems are
+    #rare for reasonable length P. (Polynomials with roughly 15
+    #roots are well handled, see test_results).
     def spectral_factorization_rec(P, extra_zeros):
         m = len(P)
         if extra_zeros < 0:
