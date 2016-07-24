@@ -111,11 +111,16 @@ def test1():
         plt.xlim([-3, 3])
         plt.ylim([-3, 3])
         plt.plot([z.real for z in P_z], [z.imag for z in P_z],
-                 'b+', markersize = 12, mew = 3)
+                 'b+', markersize = 12, mew = 3,
+                 label = 'Roots of $P(z)$')
         plt.plot([z.real for z in Q_zeros], [z.imag for z in Q_zeros],
-                 'rx', markersize = 12, mew = 3)
-
+                 'rx', markersize = 12, mew = 3,
+                 label = 'Roots of $\sigma Q(z)$')
+        plt.legend()
         plt.gca().set_aspect('equal')  
+        plt.title('Spectral Factorization')
+        plt.xlabel('Real Part')
+        plt.ylabel('Imaginary Part')
         plt.show()
     return
 
@@ -144,10 +149,15 @@ def test2():
         plt.xlim([-3, 3])
         plt.ylim([-3, 3])
         plt.plot([z.real for z in P_zeros], [z.imag for z in P_zeros],
-                 'b+', markersize = 12, mew = 3)
+                 'b+', markersize = 12, mew = 3,
+                 label = 'Roots of $P(z)$')
         plt.plot([z.real for z in Q_zeros], [z.imag for z in Q_zeros],
-                 'rx', markersize = 12, mew = 3)
+                 'rx', markersize = 12, mew = 3,
+                 label = 'Roots of $\sigma Q(z)$')
 
+        plt.title('Spectral Factorization')
+        plt.xlabel('Real Part')
+        plt.ylabel('Imaginary Part')
         plt.gca().set_aspect('equal')  
         plt.show()
     
@@ -224,6 +234,6 @@ def test3():
     return
 
 if __name__ == '__main__':
-    #test1()
-    #test2()
+    test1()
+    test2()
     test3()
