@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import linalg as spla
+from math import sqrt
 
 class FactorizationError(RuntimeError):
     '''
@@ -35,9 +36,9 @@ def spectral_factorization(P, extra_zeros = 300):
 
     See the paper below for references.
 
-    A. H. Sayed and T. Kailath, “A survey of spectral factorization
-    methods,” Numerical Linear Algebra with Applications, vol. 8,
-    no. 6-7, pp. 467–496, 2001. [Online]. Available:
+    A. H. Sayed and T. Kailath, A survey of spectral factorization
+    methods, Numerical Linear Algebra with Applications, vol. 8,
+    no. 6-7, pp. 467-496, 2001.  [Online]. Available:
     http://dx.doi.org/10.1002/nla.250
     '''
     #This recursion ensures we will get a valid Q(z)
@@ -61,12 +62,12 @@ def spectral_factorization(P, extra_zeros = 300):
             return spectral_factorization_rec(P, extra_zeros - 30)
 
         Q = L[-1,:][::-1][:m] #Last m elements of bottom row
-        s = D[-1] #Last element of D
-        if not np.all([abs(z) < 1 for z in np.roots(s*Q)]):
+        s2 = D[-1] #Last element of D
+        if not np.all([abs(z) < 1 for z in np.roots(Q)]):
             #Roots must be inside unit circle
             return spectral_factorization_rec(P, extra_zeros - 30)
         else:
-            return Q, s
+            return Q, sqrt(s2)
 
     #----FUNCTION ENTRY POINT----
     return spectral_factorization_rec(P, extra_zeros)

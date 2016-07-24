@@ -101,21 +101,16 @@ def test1():
 
         #Pass in only the causal portion
         Q, s = spectral_factorization(P[len(P)/2:])
-        Q_zeros = roots(s*Q)
+        Q_zeros = roots(Q)
 
         fig = plt.figure()
         ax = fig.add_subplot(1,1,1)
-        uc = patches.Circle((0, 0), radius = 1, fill = False,
-                            color = 'black', ls = 'dashed')
+        uc = patches.Circle((0, 0), radius = 1, fill = False,                            color = 'black', ls = 'dashed')
         ax.add_patch(uc)
         plt.xlim([-3, 3])
         plt.ylim([-3, 3])
-        plt.plot([z.real for z in P_z], [z.imag for z in P_z],
-                 'b+', markersize = 12, mew = 3,
-                 label = 'Roots of $P(z)$')
-        plt.plot([z.real for z in Q_zeros], [z.imag for z in Q_zeros],
-                 'rx', markersize = 12, mew = 3,
-                 label = 'Roots of $\sigma Q(z)$')
+        plt.plot([z.real for z in P_z], [z.imag for z in P_z],                 'b+', markersize = 12, mew = 3,                 label = 'Roots of $P(z)$')
+        plt.plot([z.real for z in Q_zeros], [z.imag for z in Q_zeros],                 'rx', markersize = 12, mew = 3,                 label = 'Roots of $\sigma Q(z)$')
         plt.legend()
         plt.gca().set_aspect('equal')  
         plt.title('Spectral Factorization')
@@ -132,13 +127,16 @@ def test2():
     p = 7 #Number of roots
     np.random.seed(1)
     for i in range(N):
-        b, H = random_arma(p, 0, p_radius = 1) #Random filter
-
+        K = stats.expon.rvs(scale = 5)
+        b, H = random_arma(p, 0, k = K, p_radius = 1) #Random filter
+        H = b[0]*H
+        
         P = polymul(H[::-1], H) #Creates a valid PSD polynomial
 
         #Pass in only the causal portion
         Q, s = spectral_factorization(P[len(P)/2:])
-        Q_zeros = roots(s*Q)
+
+        Q_zeros = roots(Q)
         P_zeros = roots(P)
 
         fig = plt.figure()
@@ -174,16 +172,18 @@ def test3():
     tols = [1./(10**i) for i in range(1, 10)]
     factorization_fails = np.array([0]*len(p))
 
-    for p_index, num_poles in enumerate(p):
+    for p_index, num_roots in enumerate(p):
         if prog_bar:
-            pbar = ProgressBar(widgets = ('p = %d ' % num_poles, 
+            pbar = ProgressBar(widgets = ('p = %d ' % num_roots, 
                                           Bar(), Percentage(),
                                           ETA()), maxval = N).start()
         num_fails = np.array([0]*len(tols))
         for trial_num in range(N):
             if prog_bar:
                 pbar.update(trial_num)
-            b, H = random_arma(num_poles, 0, p_radius = 1) #Random filter
+            K = stats.expon.rvs(scale = 5) #gain term
+            b, H = random_arma(num_roots, 0, k = K, p_radius = 1) #Random filter
+            H = b*H
 
             #Creates a valid PSD polynomial
             #Only the causal portion is needed
@@ -196,13 +196,13 @@ def test3():
                 num_fails += 1
                 continue
 
-            Q_zeros = np.sort(roots(s*Q))
-            P_zeros = roots(P)
-            P_minphase_zeros = np.sort([z for z in P_zeros if abs(z) < 1])
+            Q_zeros = np.sort(roots(Q))
+            P_minphase_zeros = np.sort(roots(H))
             
             for (atol_i, atol) in enumerate(tols):
-                if not np.allclose(Q_zeros, P_minphase_zeros,
-                                   rtol = 0, atol = atol):
+                if not (np.allclose(Q_zeros, P_minphase_zeros,
+                                    rtol = 0, atol = atol) and
+                        np.isclose(K, s, rtol = 0, atol = atol)):
                     num_fails[atol_i] += 1
 
         try:
@@ -234,6 +234,6 @@ def test3():
     return
 
 if __name__ == '__main__':
-    test1()
-    test2()
+    #test1()
+    #test2()
     test3()
