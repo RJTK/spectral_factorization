@@ -3,7 +3,7 @@ Code for performing power spectral density factorizations
 
 The power spectral density of a random process can be factorized into minimum and maximum phase factors, along with a scalar.
 
-P(z) = s^2 Q(z) Q*(1/z*)
+P(z) = s^2 Q(z) Q\*(1/z\*)
 
 The attached .pdf documents "spectral_factorization_theory.pdf" as well as "spectral_factorization_example.pdf"
 provide more information.  I pulled these references from here: (http://ece-research.unm.edu/bsanthan/ece539/)
