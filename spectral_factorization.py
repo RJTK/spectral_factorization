@@ -8,8 +8,7 @@ class FactorizationError(RuntimeError):
     pass
 
 def spectral_factorization(P, extra_zeros = 300):
-    '''
-    Performs a spectral factorization of the power spectrum P using
+    '''Performs a spectral factorization of the power spectrum P using
     the method of Bauer.  See the reference
 
     P should be an array containing the coefficients of the causal part
@@ -36,15 +35,10 @@ def spectral_factorization(P, extra_zeros = 300):
 
     See the paper below for references.
 
-    author = {Sayed, A. H. and Kailath, T.},
-    title = {A survey of spectral factorization methods},
-    journal = {Numerical Linear Algebra with Applications},
-    volume = {8},
-    number = {6-7},
-    publisher = {John Wiley & Sons, Ltd.},
-    url = {http://dx.doi.org/10.1002/nla.250},
-    year = {2001},
-
+    A. H. Sayed and T. Kailath, “A survey of spectral factorization
+    methods,” Numerical Linear Algebra with Applications, vol. 8,
+    no. 6-7, pp. 467–496, 2001. [Online]. Available:
+    http://dx.doi.org/10.1002/nla.250
     '''
     #This recursion ensures we will get a valid Q(z)
     #As extra_zeros increases, T may not be positive definite,
