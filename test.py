@@ -105,12 +105,17 @@ def test1():
 
         fig = plt.figure()
         ax = fig.add_subplot(1,1,1)
-        uc = patches.Circle((0, 0), radius = 1, fill = False,                            color = 'black', ls = 'dashed')
+        uc = patches.Circle((0, 0), radius = 1, fill = False,
+                            color = 'black', ls = 'dashed')
         ax.add_patch(uc)
         plt.xlim([-3, 3])
         plt.ylim([-3, 3])
-        plt.plot([z.real for z in P_z], [z.imag for z in P_z],                 'b+', markersize = 12, mew = 3,                 label = 'Roots of $P(z)$')
-        plt.plot([z.real for z in Q_zeros], [z.imag for z in Q_zeros],                 'rx', markersize = 12, mew = 3,                 label = 'Roots of $\sigma Q(z)$')
+        plt.plot([z.real for z in P_z], [z.imag for z in P_z],
+                 'b+', markersize = 12, mew = 3,
+                 label = 'Roots of $P(z)$')
+        plt.plot([z.real for z in Q_zeros], [z.imag for z in Q_zeros],
+                 'rx', markersize = 12, mew = 3,
+                 label = 'Roots of $\sigma Q(z)$')
         plt.legend()
         plt.gca().set_aspect('equal')  
         plt.title('Spectral Factorization')
@@ -152,7 +157,7 @@ def test2():
         plt.plot([z.real for z in Q_zeros], [z.imag for z in Q_zeros],
                  'rx', markersize = 12, mew = 3,
                  label = 'Roots of $\sigma Q(z)$')
-
+        plt.legend()
         plt.title('Spectral Factorization')
         plt.xlabel('Real Part')
         plt.ylabel('Imaginary Part')
@@ -234,6 +239,6 @@ def test3():
     return
 
 if __name__ == '__main__':
-    #test1()
-    #test2()
+    test1()
+    test2()
     test3()
