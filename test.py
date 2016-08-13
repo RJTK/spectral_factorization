@@ -60,7 +60,7 @@ def random_arma(p, q, k = 1, z_radius = 1, p_radius = 0.75):
     
   for i in range((p - (p % 2)) / 2):
     pi_r = sqrt(stats.uniform.rvs(loc = 0, scale = p_radius))
-    pi_ang = stats.uniform.rvs(loc = -np.pi, scale = np.pi)
+    pi_ang = stats.uniform.rvs(loc = -np.pi, scale = 2*np.pi)
     P.append(cmath.rect(pi_r, pi_ang))
     P.append(cmath.rect(pi_r, -pi_ang))
 
