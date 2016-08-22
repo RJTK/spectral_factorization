@@ -55,7 +55,7 @@ def random_arma(p, q, k = 1, z_radius = 1, p_radius = 0.75):
   P = []
   Z = []
   for i in range(p % 2):
-    pi_r = stats.uniform.rvs(loc = -p_radius, scale = p_radius)
+    pi_r = stats.uniform.rvs(loc = -p_radius, scale = 2*p_radius)
     P.append(pi_r)
     
   for i in range((p - (p % 2)) / 2):
@@ -65,12 +65,12 @@ def random_arma(p, q, k = 1, z_radius = 1, p_radius = 0.75):
     P.append(cmath.rect(pi_r, -pi_ang))
 
   for i in range(q % 2):
-    zi_r = stats.uniform.rvs(loc = -z_radius, scale = z_radius)
+    zi_r = stats.uniform.rvs(loc = -z_radius, scale = 2*z_radius)
     Z.append(zi_r)
 
   for i in range((q - (q % 2)) / 2):
     zi_r = stats.uniform.rvs(loc = 0, scale = z_radius)
-    zi_ang = stats.uniform.rvs(loc = -np.pi, scale = np.pi)
+    zi_ang = stats.uniform.rvs(loc = -np.pi, scale = 2*np.pi)
     Z.append(cmath.rect(zi_r, zi_ang))
     Z.append(cmath.rect(zi_r, -zi_ang))
 
